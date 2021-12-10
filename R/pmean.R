@@ -1,6 +1,6 @@
 #' get_pmean_models
 #'
-#' @param pcm e.g. "gridview", "aurora", ...
+#' @param pcm e.g. "gridview", "plexos", ...leave as NULL for all CONUS plants
 #' @param NERC North American Electric Reliability Corporation region (e.g., WECC)
 #' @param data_dir data directory containing hydrofixr consolidated inputs
 #' @param WM_case directory containing WM netcdfs (e.g., "WM_dev_base_case_cropped/")
@@ -14,19 +14,31 @@
 #' @return tibble of observed dam data (storage, inflow, release)
 #' @export
 #'
-get_pmean_models <- function(pcm = "gridview", NERC = NULL,
+get_pmean_models <- function(pcm = NULL, NERC = NULL,
                              data_dir, WM_case = "/WM_dev_base_case_cropped/"){
+
 
   WM_results_dir <- paste0(data_dir, WM_case)
 
-  # get pcm plants to be calibrated
-  ## NEEDS TO BE MADE FLEXIBLE FOR DIFFERNT PCMs!
-  read_gridview_plant_data() %>%
-    filter(!is.na(EIA_ID)) %>% pull(EIA_ID) ->
-    EIA_IDs
+  # read hydrosource plants and create filted for desired PCM
+  read_HydroSource(data_dir = data_dir, NERC = NERC) ->
+    hydrosource
+
+  if(is.null(pcm)){
+    hydrosource %>%
+      filter(!is.na(EIA_ID)) %>%
+      .[["EIA_ID"]] %>% unique() ->
+      EIA_IDs
+  }
+
+  if(pcm == "gridview"){
+    read_gridview_plant_data() %>%
+      filter(!is.na(EIA_ID)) %>% pull(EIA_ID) ->
+      EIA_IDs
+  }
 
   # get plant data and define MOSART grids
-  read_HydroSource(data_dir = data_dir, NERC = NERC) %>%
+  hydrosource %>%
     filter(EIA_ID %in% EIA_IDs) %>%
     snap_to_MOSART_grid() %>%
     correct_lat_lon_for_MOSART_stream_network() %>%
@@ -57,7 +69,7 @@ get_pmean_models <- function(pcm = "gridview", NERC = NULL,
 
   # convert to training flows
   WM_all_flows_monthly %>%
-    filter(year %in% 1980:2010) %>%
+    filter(year >= 2001) %>%
     gather(row_id, flow, -year, -month) %>%
     mutate(row_id = as.integer(row_id)) %>%
     left_join(plant_data %>% tibble::rowid_to_column("row_id"),
@@ -129,7 +141,7 @@ get_pmean_models <- function(pcm = "gridview", NERC = NULL,
 
 #' get_pmean
 #'
-#' @param pcm e.g. "gridview", "aurora", ...
+#' @param pcm e.g. "gridview", "plexos", ...leave as NULL for all CONUS plants
 #' @param NERC North American Electric Reliability Corporation region (e.g., WECC)
 #' @param data_dir data directory containing hydrofixr consolidated inputs
 #' @param WM_case directory containing WM netcdfs (e.g., "WM_dev_base_case/")

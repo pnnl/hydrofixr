@@ -5,14 +5,14 @@
 \title{get_pmean_models}
 \usage{
 get_pmean_models(
-  pcm = "gridview",
+  pcm = NULL,
   NERC = NULL,
   data_dir,
   WM_case = "/WM_dev_base_case_cropped/"
 )
 }
 \arguments{
-\item{pcm}{e.g. "gridview", "aurora", ...}
+\item{pcm}{e.g. "gridview", "plexos", ...leave as NULL for all CONUS plants}
 
 \item{NERC}{North American Electric Reliability Corporation region (e.g., WECC)}
 
