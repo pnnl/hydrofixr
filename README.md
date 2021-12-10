@@ -47,9 +47,12 @@ Use `devtools` to install `hydrofixr` directly from Github:
 -   [HydroSource Existing Hydropower Assets
     (EHA), 2021.](https://doi.org/10.21951/EHA_FY2021/1782791)
 -   [EIA form 923](https://www.eia.gov/electricity/data/eia923/)
+-   Simulation results from the MOSART-WM or
+    [mosartwmpy](https://github.com/IMMM-SFA/mosartwmpy) large scale
+    hydrological and water management model.
 
 A pre-prepared input dataset formatted for `hydrofixr` is available
-[here](...)
+[TBD](TBD).
 
 ## Development history
 
