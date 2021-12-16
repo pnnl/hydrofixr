@@ -8,8 +8,9 @@
 
 ## About
 
-`hydrofixr` is a tool for creating hydropower data to drive Production
-Cost Models (PCMs) and Capacity Expansion Models (CEMs).
+`hydrofixr` is a post processing tool for creating hydropower data to
+drive Production Cost Models (PCMs) and Capacity Expansion Models
+(CEMs).
 
 **Contact:** [Sean Turner](sean.turner@pnnl.gov) or [Nathalie
 Voisin](nathalie.voisin@pnnl.gov), Pacific Northwest National Laboratory
@@ -20,8 +21,8 @@ Voisin](nathalie.voisin@pnnl.gov), Pacific Northwest National Laboratory
     plants throughout Western United States.
 -   Monthly and weekly constraints (maximum and minimum generation) for
     individual plants.
--   Historical and future projected climate and water availability
-    conditions.
+-   Constraints under historical and future projected climate and water
+    availability conditions.
 -   Options to compute hydropower from large-scale regulated river
     simulations or USGS regulated flow observations.
 -   Seamless coupling with output from the `MOSART-WM` and `mosartwmpy`
@@ -29,12 +30,12 @@ Voisin](nathalie.voisin@pnnl.gov), Pacific Northwest National Laboratory
 
 ### Under development
 
--   Flexible output formats for different power systems models (e.g.,
-    GridView, PLEXOS, ReEDS).
+-   Flexible output formats for different zonal or nodal power systems
+    models (e.g., PROMOD, GridView, PLEXOS, ReEDS).
 -   Extension to hydropower plants in Canada and Mexico contributing to
     Western Interconnect.
 -   Extension to entire CONUS domain (Eastern Interconnect, Texas).
--   Alternative technical for computing generation.
+-   Alternative technical approaches for computing generation.
 
 ## Installation
 
@@ -61,13 +62,15 @@ A pre-prepared input dataset formatted for `hydrofixr` is available
 The original code and ideas behind `hydrofixr` were conceived in 2015 by
 the Pacific Northwest National Laboratory. Initial developments were
 supported though Laboratory Directed Research and Development (LDRD)
-funds, and included post-processing of river simulation data from the
-`MOSART-WM` model, leading to the creation of the “Water Scarcity Grid
-Impact Factor” (a metric indicating the impact of regional water
-conditions on water-dependent power generating assets) ([Voisin et al.,
+funds, and included post-processing of large scale river simulation data
+from the `MOSART-WM` model ([Voisin et al.,
+2013)](https://hess.copernicus.org/articles/17/3605/2013/), leading to
+the creation of the “Water Scarcity Grid Impact Factor” (a metric
+indicating the impact of regional water conditions on water-dependent
+power generating assets) and monthly hydropower inputs for a production
+cost model ([Voisin et al.,
 2016](https://www.sciencedirect.com/science/article/abs/pii/S0360544216311732))
-and monthly hydropower inputs for a production cost model ([Voisin et
-al.,
+and under 55 years of historical water availability ([Voisin et al.,
 2018](https://www.sciencedirect.com/science/article/abs/pii/S0360544216311732)).
 This capability to create monthly energy targets for production cost
 models was applied further in subsequent studies funded by the
@@ -95,10 +98,10 @@ al.,
 #### Creation of `hydrofixr`
 
 Recently, `wmpp` was enhanced with weekly-resolution energy targets and
-parameterization for maximum and minimum hourly generation to support a
+parameterization for maximum and minimum hourly generation to support
 the creation of new hydropower datasets applied in research funded by
 DoE Office of Energy Efficiency and Renewable Energy
 [hydroWIRES](https://www.energy.gov/eere/water/hydrowires-initiative)
-initiative.
+initiative. Publications to be posted soon.
 
 The model was re-branded as `hydrofixr` and released on 2021-12-XX.
