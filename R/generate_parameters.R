@@ -17,7 +17,7 @@ generate_WECC_parameters <- function(year = 2009,
   message("Starting parameter generation. This may take a few minutes...")
 
   if(resolution == "monthly"){
-    message("\nGetting monthly average generation estimates...")
+    message("Getting monthly average generation estimates...")
         get_pmean(pcm = "gridview", NERC = "WECC",
                   data_dir = data_dir,
                   WM_case = WM_case,
@@ -25,7 +25,7 @@ generate_WECC_parameters <- function(year = 2009,
           pmean_monthly_x
 
 
-        message("\nComputing pmax and pmin parameters")
+        message(" | Computing pmax and pmin parameters")
         pmean_monthly_x %>%
           left_join(get_pmax_pmin_predictions(), by = "EIA_ID") %>%
           left_join(read_HydroSource() %>%
@@ -67,11 +67,11 @@ generate_WECC_parameters <- function(year = 2009,
 
   if(resolution == "weekly"){
 
-    message("\nGetting weekly average generation estimates...")
+    message(" | Getting weekly average generation estimates...")
     get_pmean(pcm = "gridview", NERC = "WECC", WM_results_dir = WM_results_dir,
               mode = "weekly", hyd_year = year) -> pmean_weekly_x
 
-    message("\nComputing pmax and pmin parameters")
+    message(" | Computing pmax and pmin parameters")
     pmean_weekly_x %>%
       left_join(get_pmax_pmin_predictions(), by = "EIA_ID") %>%
       left_join(read_HydroSource() %>% select(EIA_ID, nameplate_HS = CH_MW, plant, state, bal_auth, mode),
