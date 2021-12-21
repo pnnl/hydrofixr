@@ -1,6 +1,6 @@
 #' get_pmean_models
 #'
-#' @param pcm e.g. "gridview", "plexos", ...leave as NULL for all CONUS plants
+#' @param pcm e.g. "gridview", "plexos", ...leave as "none" for all CONUS plants, unformatted
 #' @param NERC North American Electric Reliability Corporation region (e.g., WECC)
 #' @param data_dir data directory containing hydrofixr consolidated inputs
 #' @param WM_case directory containing WM netcdfs (e.g., "WM_dev_base_case_cropped/")
@@ -14,9 +14,8 @@
 #' @return tibble of observed dam data (storage, inflow, release)
 #' @export
 #'
-get_pmean_models <- function(pcm = NULL, NERC = NULL,
+get_pmean_models <- function(pcm = "none", NERC = NULL,
                              data_dir, WM_case = "/WM_dev_base_case_cropped/"){
-
 
   WM_results_dir <- paste0(data_dir, WM_case)
 
@@ -24,7 +23,7 @@ get_pmean_models <- function(pcm = NULL, NERC = NULL,
   read_HydroSource(data_dir = data_dir, NERC = NERC) ->
     hydrosource
 
-  if(is.null(pcm)){
+  if(pcm == "none"){
     hydrosource %>%
       filter(!is.na(EIA_ID)) %>%
       .[["EIA_ID"]] %>% unique() ->
@@ -92,6 +91,9 @@ get_pmean_models <- function(pcm = NULL, NERC = NULL,
   data_for_calibration %>%
     split(.$EIA_ID) %>%
     map_dfr(function(plant){
+
+      if(all(is.na(plant[["av_gen"]]))) return(tibble())
+
       plant %>% split(.$month) %>%
         map_dfr(function(mth){
 
@@ -141,7 +143,7 @@ get_pmean_models <- function(pcm = NULL, NERC = NULL,
 
 #' get_pmean
 #'
-#' @param pcm e.g. "gridview", "plexos", ...leave as NULL for all CONUS plants
+#' @param pcm e.g. "gridview", "plexos", ...leave as "none" for all CONUS plants
 #' @param NERC North American Electric Reliability Corporation region (e.g., WECC)
 #' @param data_dir data directory containing hydrofixr consolidated inputs
 #' @param WM_case directory containing WM netcdfs (e.g., "WM_dev_base_case/")
@@ -158,7 +160,7 @@ get_pmean_models <- function(pcm = NULL, NERC = NULL,
 #' @return tibble of observed dam data (storage, inflow, release)
 #' @export
 #'
-get_pmean <- function(pcm = "gridview", NERC = "WECC",
+get_pmean <- function(pcm = "none", NERC = NULL,
                       data_dir,
                       WM_case = "/WM_dev_base_case_cropped/",
                       mode = "monthly",

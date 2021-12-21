@@ -5,8 +5,8 @@
 \title{get_pmean}
 \usage{
 get_pmean(
-  pcm = "gridview",
-  NERC = "WECC",
+  pcm = "none",
+  NERC = NULL,
   data_dir,
   WM_case = "/WM_dev_base_case_cropped/",
   mode = "monthly",
@@ -14,7 +14,7 @@ get_pmean(
 )
 }
 \arguments{
-\item{pcm}{e.g. "gridview", "aurora", ...}
+\item{pcm}{e.g. "gridview", "plexos", ...leave as "none" for all CONUS plants}
 
 \item{NERC}{North American Electric Reliability Corporation region (e.g., WECC)}
 
