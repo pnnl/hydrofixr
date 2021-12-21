@@ -52,8 +52,9 @@ Use `devtools` to install `hydrofixr` directly from Github:
     [mosartwmpy](https://github.com/IMMM-SFA/mosartwmpy) large scale
     hydrological and water management model.
 
-A pre-prepared input dataset formatted for `hydrofixr` is available
-[TBD](TBD).
+A preformatted input dataset is available on Zenodo:
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5773123.svg)](https://doi.org/10.5281/zenodo.5773123)
 
 ## Development history
 
