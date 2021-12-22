@@ -93,10 +93,14 @@ get_pmean_models <- function(pcm = "none", NERC = NULL,
     split(.$EIA_ID) %>%
     map_dfr(function(plant){
 
+      # catch and remove full NA cases to avoid lm.fit failure
       if(all(is.na(plant[["av_gen"]]))) return(tibble())
 
       plant %>% split(.$month) %>%
         map_dfr(function(mth){
+
+          # catch and remove full NA cases to avoid lm.fit failure
+          if(all(is.na(mth[["av_gen"]]))) return(tibble())
 
           model_ <- lm(data = mth, av_gen ~ flow)
 
