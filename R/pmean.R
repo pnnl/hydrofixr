@@ -139,7 +139,8 @@ get_pmean_models <- function(pcm = "none", NERC = NULL,
 
   return(
     list(
-      calibration_data = calibration_data %>% filter(!EIA_ID %in% plants_with_missing_data),
+      calibration_data,
+      #calibration_data = calibration_data %>% filter(!EIA_ID %in% plants_with_missing_data),
       WM_flows_all_dams_daily = WM_flows_all_dams_daily,
       plant_data = plant_data
       )
