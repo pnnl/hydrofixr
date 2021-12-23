@@ -36,7 +36,7 @@ gridview_to_NHD_join_helper <- tibble::tribble(
 
 # generate hours per month
 gen_hrs_per_month <- function(){
-  tibble(date = seq(ISOdate(2001,1,1), to = ISOdate(2010,12,31), by = "day")) %>%
+  tibble(date = seq(ISOdate(2001,1,1), to = ISOdate(2021,12,31), by = "day")) %>%
     mutate(date = lubridate::date(date),
            year = lubridate::year(date),
            month = lubridate::month(date)) %>%
@@ -47,47 +47,6 @@ gen_hrs_per_month <- function(){
     select(year, month, n_hours)
 }
 
-
-
-
-
-# readxl::read_xlsx("../../../WM-PLEXOS/hydro-years/EIA plant capacity/eia8602019/3_1_Generator_Y2019.xlsx", skip = 1) %>%
-#   select(EIA_ID = `Plant Code`,
-#          nameplate = `Nameplate Capacity (MW)`,
-#          summer_cap = `Summer Capacity (MW)`,
-#          winter_cap = `Winter Capacity (MW)`
-#          ) %>%
-#   filter(EIA_ID %in% hydro_EIA_IDs) -> x
-#
-# x %>%
-#   group_by(EIA_ID) %>%
-#   summarise(nameplate = sum(nameplate),
-#             summer_cap = sum(summer_cap),
-#             winter_cap = sum(winter_cap)) -> plant_caps
-#
-# expand.grid(month = month.abb, EIA_ID = plant_caps[["EIA_ID"]]) %>%
-#   as_tibble() %>%
-#   left_join(plant_caps) %>%
-#   mutate(capability = case_when(
-#     month %in% c("Jun", "Jul", "Aug") ~ summer_cap,
-#     month %in% c("Dec", "Jan", "Feb") ~ winter_cap,
-#     TRUE ~ (summer_cap + winter_cap) / 2
-#   )) %>%
-#   select(EIA_ID, month, nameplate, capability) %>%
-#   mutate(nameplate = round(nameplate, 2),
-#          capability = round(capability, 2)) %>%
-#   readr::write_csv("inst/extdata/EIA8602019/monthly_plant_capability.csv")
-
-
-tibble(date = seq(ISOdate(2001,1,1), to = ISOdate(2010,12,31), by = "day")) %>%
-  mutate(date = lubridate::date(date),
-         year = lubridate::year(date),
-         month = lubridate::month(date)) %>%
-  group_by(year, month) %>% summarise(n_days = n()) %>%
-  ungroup() %>% mutate(n_hours = n_days * 24) %>%
-  left_join(tibble(month = 1:12, month_abb = month.abb), by = "month") %>%
-  mutate(month = month_abb) %>%
-  select(year, month, n_hours) ->
-  n_hours
+n_hours <- gen_hrs_per_month
 
 
