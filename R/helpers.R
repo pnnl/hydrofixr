@@ -47,6 +47,6 @@ gen_hrs_per_month <- function(){
     select(year, month, n_hours)
 }
 
-n_hours <- gen_hrs_per_month
+n_hours <- gen_hrs_per_month()
 
 
